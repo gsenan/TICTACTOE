@@ -1,4 +1,4 @@
-# Initialize the game board.
+# Initialize the game board
 # Create a 3x3 grid initialized with spaces. Each space represents an empty spot on the board.
 board = [[' ' for _ in range(3)] for _ in range(3)]
 score = {1: 0, 2: 0}  # Keep score for each player
@@ -23,12 +23,12 @@ def check_win(board):
     :return: True if there is a winning condition, False otherwise.
     """
     for i in range(3):
-        if board[i][0] == board[i][1] == board[i][2] != ' ':  # Check rows.
+        if board[i][0] == board[i][1] == board[i][2] != ' ':  # Check rows
             return True
-        if board[0][i] == board[1][i] == board[2][i] != ' ':  # Check columns.
+        if board[0][i] == board[1][i] == board[2][i] != ' ':  # Check columns
             return True
     if board[0][0] == board[1][1] == board[2][2] != ' ' or board[0][2] == board[1][1] == board[2][
-        0] != ' ':  # Check diagonals.
+        0] != ' ':  # Check diagonals
         return True
     return False
 
@@ -54,25 +54,25 @@ def take_turn(player, board, symbol):
     :return: None.
     """
     print(f"Player {player}'s turn")
-    while True:  # Keep asking until a valid input is provided.
+    while True:  # Keep asking until a valid input is provided
         try:
             row = int(input("Choose a row (0-2): "))
             column = int(input("Choose a column (0-2): "))
 
-            # Check if the chosen position is out of bounds.
+            # Check if the chosen position is out of bounds
             if row < 0 or row > 2 or column < 0 or column > 2:
                 print("Invalid position! Choose a row and a column between 0 and 2.")
-                continue  # Skip the rest of the loop and ask for input again.
+                continue  # Skip the rest of the loop and ask for input again
 
             # Check if the spot is taken. If it is, let the player choose again.
             if board[row][column] != ' ':
                 print("Spot taken. Choose another.")
             else:
-                break  # Break the loop if a valid, empty spot is chosen.
-        except ValueError:  # Catch if the input is not an integer.
+                break  # Break the loop if a valid, empty spot is chosen
+        except ValueError:  # Catch if the input is not an integer
             print("Enter a number.")
 
-    # Place the player's mark on the chosen spot.
+    # Place the player's mark on the chosen spot
     board[row][column] = symbol
 
 
@@ -89,9 +89,9 @@ def main():
     Main function to control the flow of the tic-tac-toe game.
     :return: None.
     """
-    global board, symbols  # Use the global board and symbols variables.
+    global board, symbols  # Use the global board and symbols variables
 
-    # Allow Player 1 to choose their symbol and automatically assign the other to Player 2.
+    # Allow Player 1 to choose their symbol and automatically assign the other to Player 2
     while True:
         player1_symbol = input("Player 1, choose your symbol (X or O): ").upper()
         if player1_symbol in ['X', 'O']:
@@ -104,9 +104,9 @@ def main():
 
     starting_player = 1  # Player 1 starts by default
 
-    for round in range(3):  # Play 3 rounds.
-        player = starting_player  # Set the starting player for the round.
-        board = reset_board()  # Reset the board for each round.
+    for round in range(3):  # Play 3 rounds
+        player = starting_player  # Set the starting player for the round
+        board = reset_board()  # Reset the board for each round
         while True:
             print_board(board)
             take_turn(player, board, symbols[player])
@@ -117,12 +117,12 @@ def main():
             if check_tie(board):
                 print(f"It's a tie in round {round + 1}!")
                 break
-            player = 2 if player == 1 else 1  # Switch players.
-        print_board(board)  # Show the final board.
+            player = 2 if player == 1 else 1  # Switch players
+        print_board(board)  # Show the final board
 
-    # Print the final scores after all rounds.
+    # Print the final scores after all rounds
     print(f"Final scores:\nPlayer 1: {score[1]}\nPlayer 2: {score[2]}")
-    # Determine the overall winner.
+    # Determine the overall winner
     if score[1] > score[2]:
         print("Player 1 is the overall winner!")
     elif score[1] < score[2]:
